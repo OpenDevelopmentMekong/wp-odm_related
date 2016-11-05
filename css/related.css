@@ -1,0 +1,12 @@
+#delete_item {
+	cursor: pointer;
+	color: red;
+}
+#related_list_multiple_box {
+	display: none;
+}
+#related_list_box {
+	border:1px solid #ddd;
+	padding: 0 10px;
+	margin: 10px 0 0;
+}
