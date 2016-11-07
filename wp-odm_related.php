@@ -11,11 +11,12 @@
 
 include_once plugin_dir_path(__FILE__).'utils/utils.php';
 include_once plugin_dir_path(__FILE__).'utils/wp-odm_related-options.php';
+include_once plugin_dir_path(__FILE__).'widgets/odm-related-content-widget.php';
 
 $GLOBALS['wp_odm_related_options'] = new Wp_odm_related_Options();
 
-if (!class_exists('Odm_Related_Contents_Plugin')) {
-    class Odm_Related_Contents_Plugin
+if (!class_exists('Odm_related_content_Plugin')) {
+    class Odm_related_content_Plugin
     {
 				/**
 				* Construct the plugin object.
@@ -72,7 +73,7 @@ if (!class_exists('Odm_Related_Contents_Plugin')) {
            $posttypes_section
           );
 
-          register_setting($section_group, "related_type");
+          register_setting($section_group, "related_type",'wpckan_remove_whitespaces');
           register_setting($section_group, $section_name);
 				}
 
@@ -115,15 +116,15 @@ if (!class_exists('Odm_Related_Contents_Plugin')) {
         	if (in_array($post_type, get_post_types()) && supported_post_types_option($post_type)) {
             add_meta_box('related_metabox', __('Add related contents', 'wp-odm_related'), array($this, 'render_related_metabox'), $post_type, 'advanced', 'high');
 
-            wp_register_script('related_contents_js', plugins_url('wp-odm_related/js/related-metabox.js'), array('jquery'));
-            wp_enqueue_script('related_contents_js');
+            wp_register_script('related_content_js', plugins_url('wp-odm_related/js/related-metabox.js'), array('jquery'));
+            wp_enqueue_script('related_content_js');
           }
 				}
 
 				public function render_related_metabox($post){
 					$related_label = get_post_meta($post->ID, 'related_label', true);
 					$related_url = get_post_meta($post->ID, 'related_url', true);
-          $related_contents_json = get_post_meta( $post->ID, 'related_contents', true );
+          $related_content_json = get_post_meta( $post->ID, 'related_content', true );
           require 'templates/related-metabox.php';
 				}
 
@@ -136,10 +137,10 @@ if (!class_exists('Odm_Related_Contents_Plugin')) {
               return $post_ID;
           }
 
-          if($_POST['related_contents']){
-            $related_contents_json = unset_index_in_related_contents( $_POST['related_contents']);
+          if($_POST['related_content']){
+            $related_content_json = unset_index_in_related_content( $_POST['related_content']);
               // Update the meta field.
-            update_post_meta( $post_ID, 'related_contents', $related_contents_json);
+            update_post_meta( $post_ID, 'related_content', $related_content_json);
           }
         }
 
@@ -159,11 +160,11 @@ if (!class_exists('Odm_Related_Contents_Plugin')) {
 		}
 }
 
-if (class_exists('Odm_Related_Contents_Plugin')) {
-  register_activation_hook(__FILE__, array('Odm_Related_Contents_Plugin', 'activate'));
-  register_deactivation_hook(__FILE__, array('Odm_Related_Contents_Plugin', 'deactivate'));
+if (class_exists('Odm_related_content_Plugin')) {
+  register_activation_hook(__FILE__, array('Odm_related_content_Plugin', 'activate'));
+  register_deactivation_hook(__FILE__, array('Odm_related_content_Plugin', 'deactivate'));
 
-	$GLOBALS['related'] = new Odm_Related_Contents_Plugin();
+	$GLOBALS['related'] = new Odm_related_content_Plugin();
 
   if(isset($GLOBALS['related'])){
 

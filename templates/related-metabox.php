@@ -1,17 +1,17 @@
   <p>
-		<label for='related_contents_lable'>Label</label>
-    <input id="related_contents_lable" placeholder="English" type="text" lang="en" name="related_contents_lable" value="" size="35" />
+		<label for='related_content_label'>Label</label>
+    <input id="related_content_label" placeholder="English" type="text" lang="en" name="related_content_label" value="" size="35" />
 		<?php
 		if(odm_language_manager()->get_the_language_by_site() != "English"):
 			$localize = odm_language_manager()->languages_by_theme[odm_country_manager()->get_current_country()];	?>
-			<input id="related_contents_lable" placeholder="<?php echo odm_language_manager()->get_the_language_by_site(); ?>" type="text" name="related_contents_lable" lang="<?php echo $localize;?>" value="" size="35" />
+			<input id="related_content_label" placeholder="<?php echo odm_language_manager()->get_the_language_by_site(); ?>" type="text" name="related_content_label" lang="<?php echo $localize;?>" value="" size="35" />
 			<?php
 		endif; ?>
 	</p>
 	<p>
-		<label for='related_contents_url'>Link</label>
-	  <input id="related_contents_url" placeholder="URL" type="text" name="related_contents_url" value="" size="52" />
-		<select name="related_contents_type" id="related_contents_type">
+		<label for='related_content_url'>Link</label>
+	  <input id="related_content_url" placeholder="URL" type="text" name="related_content_url" value="" size="52" />
+		<select name="related_content_type" id="related_content_type">
 			<option value="">Select type</option>
 			<?php
       $related_type = $GLOBALS['wp_odm_related_options']->get_option('related_type');
@@ -47,4 +47,4 @@
 	</div>
 
 
-  <input id="related_contents" name="related_contents" type="hidden" value='<?php echo $related_contents_json; ?>'/>
+  <input id="related_content" name="related_content" type="hidden" value='<?php echo $related_content_json; ?>'/>

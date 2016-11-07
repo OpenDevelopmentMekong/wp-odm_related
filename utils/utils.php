@@ -19,13 +19,13 @@ function get_related_types()
 {
 	$wp_post_types = get_post_types(array('public' => true, '_builtin' => false));
 	$ckan_types = array(
-    "odm_dataset_type_dataset" => "dataset",
-    "odm_dataset_type_library_record" => "library_record",
-    "odm_dataset_type_laws_record" => "laws_record"
+    "dataset" => "dataset",
+    "library_record" => "library_record",
+    "laws_record" => "laws_record"
   );
 
 	foreach ($wp_post_types as $key => $value) {
-      $wp_types[ "odm_content_type_" . $key] = $key;
+      $wp_types[$key] = $key;
   }
   $list_related_types = array_merge($wp_types, $ckan_types);
 
@@ -33,25 +33,44 @@ function get_related_types()
   return $list_related_types;
 }
 
-function unset_index_in_related_contents($json_data){
+function unset_index_in_related_content($json_data){
   if($json_data){
-    $related_contents_arr = json_decode(stripslashes($json_data), true);
-    if($related_contents_arr){
-      foreach ($related_contents_arr as $related_key => $related_arr) {
+    $related_content_arr = json_decode(stripslashes($json_data), true);
+    if($related_content_arr){
+      foreach ($related_content_arr as $related_key => $related_arr) {
         if(isset($related_arr['index'])){
           unset($related_arr['index']);
         }
-        $related_contents_no_index[] = $related_arr;
+        $related_content_no_index[] = $related_arr;
       }
 
-      if($related_contents_no_index){
-        $related_contents = json_encode($related_contents_no_index);
-        return $related_contents;
+      if($related_content_no_index){
+        $related_content = json_encode($related_content_no_index);
+        return $related_content;
       }
     }
 
     return $json_data;
   }
+}
+
+function render_template_for_related_content($related_content,$type){
+
+  if ($type == "topic"): ?>
+    <ul>
+      <?php
+        $related_content = json_decode($related_content,true);
+        foreach($related_content as $key => $content):
+          $content_url = $content["url"];
+          $content_label = !empty($content["label"][odm_language_manager()->get_current_language()]) ? $content["label"][odm_language_manager()->get_current_language()] : $content["label"]["en"];
+        ?>
+        <li><a href="<?php echo $content_url; ?>"><?php echo $content_label; ?></li>
+      <?php endforeach; ?>
+    </ul>
+
+    <?php
+  endif;
+
 }
 
 ?>

@@ -4,10 +4,10 @@ $(document).ready(function() {
 	get_storage_value_onload();
 	var index = linkList.length;
 	$('#related_add_button').click(function(){
-		var type = $('#related_contents_type').val();
-		var url = $('#related_contents_url').val();
+		var type = $('#related_content_type').val();
+		var url = $('#related_content_url').val();
 		label = {};
-		$("input#related_contents_lable").each(function(){
+		$("input#related_content_label").each(function(){
 				var lang = $(this).attr("lang");
 				label[lang] = $(this).val();
 		});
@@ -67,11 +67,11 @@ function add_item_to_list_container(type, url, label, item_index){
 		hyperlink_text_localize = url;
 	}
 
-	var link_lable_en = "<a href='"+url+"' target='_blank'>" + hyperlink_text_en + "</a> ("+type+")";
-	var link_lable_localize = "<a href='"+url+"' target='_blank'>" + hyperlink_text_localize + "</a> ("+type+")";
+	var link_label_en = "<a href='"+url+"' target='_blank'>" + hyperlink_text_en + "</a> ("+type+")";
+	var link_label_localize = "<a href='"+url+"' target='_blank'>" + hyperlink_text_localize + "</a> ("+type+")";
 	var delete_item = ' <span id="delete_item" index ="'+item_index+'" href="#">Delete</span>';
-	$("#related_list").append("<p class='item item-"+item_index+"'>" + link_lable_en + delete_item +"</p>");
-	$("#related_list_localize").append("<p class='item item-"+item_index+"'>" + link_lable_localize + delete_item +"</p>");
+	$("#related_list").append("<p class='item item-"+item_index+"'>" + link_label_en + delete_item +"</p>");
+	$("#related_list_localize").append("<p class='item item-"+item_index+"'>" + link_label_localize + delete_item +"</p>");
 }
 
 function remove_item_from_object_with_index(item_index){
@@ -93,7 +93,7 @@ function get_item_from_object_with_index(item_index){
 }
 
 function get_storage_value_onload(){
-  var linkList_json = $("#related_contents").val();
+  var linkList_json = $("#related_content").val();
   if (linkList_json) {
 		linkList = JSON.parse(linkList_json);
 		set_related_list_value_onload();
@@ -124,18 +124,18 @@ function update_form_value(){
 	var linkList_json = JSON.stringify(linkList);
 	if(linkList.length!="") {
 		$("#related_list_multiple_box").show();
-		$("#related_contents").val(linkList_json);
+		$("#related_content").val(linkList_json);
 	}else {
 		$("#related_list_multiple_box").hide();
-		$("#related_contents").val("");
+		$("#related_content").val("");
 	}
 }
 
 function clear_related_fields(){
 	$('.related_error').text('');
-	$('#related_contents_url').val('');
-	$('#related_contents_type').val('');
-	$('input#related_contents_lable').each(function(){
+	$('#related_content_url').val('');
+	$('#related_content_type').val('');
+	$('input#related_content_label').each(function(){
 		$(this).val('');
 	});
 }
