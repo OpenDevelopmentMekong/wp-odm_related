@@ -4,13 +4,15 @@
 	  <?php @settings_fields('related-setttings'); ?>
 	  <?php @do_settings_fields('related-setttings'); ?>
 	  <?php
-		$related_type = get_option('related_type');
+		$related_type = !empty(get_option('related_type')) ? get_option('related_type') : implode(', ', get_related_types());
 		$defaul_related_type = implode(', ', get_related_types());
 		?>
 
 		<table class="form-table">
 			<tr valign="top">
-					<th scope="row"><label for="related_type"><?php _e('Supported related content types','wp-odm_related') ?></label></th>
+					<th scope="row">
+            <label for="related_type"><?php _e('Supported related content types','wp-odm_related') ?></label>
+          </th>
 
 					<td colspan="2">
 						<input class="full-width" type="text" name="related_type" id="related_type" value="<?php echo $related_type ?>"/>

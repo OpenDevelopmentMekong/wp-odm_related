@@ -14,7 +14,8 @@
 		<select name="related_contents_type" id="related_contents_type">
 			<option value="">Select type</option>
 			<?php
-			$related_types = explode(",",get_option('related_type'));
+      $related_type = get_option('related_type');
+			$related_types = explode(",",$related_type);
 			foreach ($related_types as $type){
 					echo '<option value="'.$type.'">'.$type.'</option>';
 			}
@@ -26,7 +27,7 @@
 	<div id="related_list_multiple_box">
 		<div id="multiple-site">
 			<input type="radio" id="related_list_en" class="en" name="language_site_related_list" value="en" checked />
-			<label for="related_list_en"><?php _e('English', 'wp-odm_profile_pages'); ?></label> &nbsp;    
+			<label for="related_list_en"><?php _e('English', 'wp-odm_profile_pages'); ?></label> &nbsp;
 		  <?php if (odm_language_manager()->get_the_language_by_site() != "English"):   ?>
         <input type="radio" id="related_list_localization" class="localization" name="language_site_related_list" value="localization" />
   			<label for="related_list_localization"><?php _e(odm_language_manager()->get_the_language_by_site(), 'wp-odm_profile_pages'); ?></label>
