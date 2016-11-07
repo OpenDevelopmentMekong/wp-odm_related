@@ -1,0 +1,51 @@
+"Project-Id-Version: wp-odm_related\n"
+"POT-Creation-Date: 2016-11-07 11:37+0100\n"
+"PO-Revision-Date: 2016-11-07 11:37+0100\n"
+"Language-Team: Thai (https://www.transifex.com/open-development-mekong/teams/27158/th/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: th\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 1.8.7.1\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-KeywordsList: _;_e;__;_n:1,2;_x:1,2c;_ex:1,2c\n"
+"X-Poedit-SearchPath-0: i18n\n"
+"X-Poedit-SearchPath-1: .\n"
+"X-Poedit-SearchPathExcluded-0: components\n"
+"X-Poedit-SearchPathExcluded-1: vendor\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+
+#: templates/related-metabox.php:29
+msgid "English"
+msgstr ""
+
+#: utils/settings.php:13
+msgid "Related Content Types"
+msgstr ""
+
+#: utils/settings.php:17
+msgid ""
+"Specify a list of comma-separated type names for selecting the TYPE of a "
+"related content on metabox and widget."
+msgstr ""
+
+#: utils/settings.php:18
+msgid "The default related content types are:<br/> "
+msgstr ""
+
+#: wp-odm_related.php:62
+msgid "Post Types"
+msgstr ""
+
+#: wp-odm_related.php:69
+msgid "Post Types that require related contents "
+msgstr ""
+
+#: wp-odm_related.php:108
+msgid "You do not have sufficient permissions to access this page."
+msgstr ""
+
+#: wp-odm_related.php:116
+msgid "Add related contents"
+msgstr ""
