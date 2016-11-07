@@ -137,30 +137,9 @@ if (!class_exists('Odm_Related_Contents_Plugin')) {
           }
 
           if($_POST['related_contents']){
-            $related_contents_json = $this->unset_index_in_related_contents( $_POST['related_contents']);
+            $related_contents_json = unset_index_in_related_contents( $_POST['related_contents']);
               // Update the meta field.
             update_post_meta( $post_ID, 'related_contents', $related_contents_json);
-          }
-        }
-
-        public function unset_index_in_related_contents($json_data){
-          if($json_data){
-            $related_contents_arr = json_decode(stripslashes($json_data), true);
-            if($related_contents_arr){
-              foreach ($related_contents_arr as $related_key => $related_arr) {
-                if(isset($related_arr['index'])){
-                  unset($related_arr['index']);
-                }
-                $related_contents_no_index[] = $related_arr;
-              }
-
-              if($related_contents_no_index){
-                $related_contents = json_encode($related_contents_no_index);
-                return $related_contents;
-              }
-            }
-
-            return $json_data;
           }
         }
 

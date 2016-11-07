@@ -1,4 +1,5 @@
 <?php
+
 function check_requirements_related_content()
 {
   return function_exists('wpckan_get_ckan_domain') && function_exists('wpckan_validate_settings_read') && wpckan_validate_settings_read();
@@ -6,11 +7,11 @@ function check_requirements_related_content()
 
 function supported_post_types_option($post_type=null)
 {
-	$supported_posttype = get_option("related_post_types");
+	$supported_posttypes = $GLOBALS['wp_odm_related_options']->get_option("related_post_types");
 	if($post_type){
-		return $supported_posttype[$post_type];
+		return $supported_posttypes[$post_type];
 	} else {
-		return $supported_posttype;
+		return $supported_posttypes;
 	}
 }
 
@@ -27,23 +28,30 @@ function get_related_types()
       $wp_types[ "odm_content_type_" . $key] = $key;
   }
   $list_related_types = array_merge($wp_types, $ckan_types);
-  
+
   sort($list_related_types);
   return $list_related_types;
 }
 
-function show_related_content_in_metabox($json_data){
-/*	if(!empty($json_data)){
-	$related_contents_arr = json_decode($json_data);
-  foreach ($related_contents_arr as $related_key => $related_arr) {
-		if(array_key_exists('index', $related_arr)){
-		 	unset($related_arr->index);
-		}
+function unset_index_in_related_contents($json_data){
+  if($json_data){
+    $related_contents_arr = json_decode(stripslashes($json_data), true);
+    if($related_contents_arr){
+      foreach ($related_contents_arr as $related_key => $related_arr) {
+        if(isset($related_arr['index'])){
+          unset($related_arr['index']);
+        }
+        $related_contents_no_index[] = $related_arr;
+      }
+
+      if($related_contents_no_index){
+        $related_contents = json_encode($related_contents_no_index);
+        return $related_contents;
+      }
+    }
+
+    return $json_data;
   }
-  $related_contents_update = json_encode($related_contents_arr);
-  return $related_contents_update;
-}*/
-	print_r($json_data);
 }
 
 ?>
