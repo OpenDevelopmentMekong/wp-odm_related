@@ -9,10 +9,10 @@
  * License: GPLv3.
  */
 
-define("RC_PLUGIN_DIR", plugin_dir_path(__FILE__));
+include_once plugin_dir_path(__FILE__).'utils/utils.php';
+include_once plugin_dir_path(__FILE__).'utils/wp-odm_related-options.php';
 
-// Require utils
-require_once RC_PLUGIN_DIR.'utils/utils.php';
+$GLOBALS['wp_odm_related_options'] = new Wp_odm_related_Options();
 
 if (!class_exists('Odm_Related_Contents_Plugin')) {
     class Odm_Related_Contents_Plugin
@@ -96,7 +96,7 @@ if (!class_exists('Odm_Related_Contents_Plugin')) {
 
 				public function admin_add_menu()
         {
-            add_options_page('Related Content Settings', 'Related Content Settings', 'manage_options', 'wp-odm_related', array($this, 'plugin_settings_page'));
+            add_options_page('Related Content', 'Related Content', 'manage_options', 'wp-odm_related', array($this, 'plugin_settings_page'));
         }
 
 				/**
