@@ -2,11 +2,11 @@
 		<label for='related_contents_lable'>Label</label>
     <input id="related_contents_lable" placeholder="English" type="text" lang="en" name="related_contents_lable" value="" size="35" />
 		<?php
-		if(odm_language_manager()->get_the_language_by_site() != "English"){
+		if(odm_language_manager()->get_the_language_by_site() != "English"):
 			$localize = odm_language_manager()->languages_by_theme[odm_country_manager()->get_current_country()];	?>
 			<input id="related_contents_lable" placeholder="<?php echo odm_language_manager()->get_the_language_by_site(); ?>" type="text" name="related_contents_lable" lang="<?php echo $localize;?>" value="" size="35" />
 			<?php
-		} ?>
+		endif; ?>
 	</p>
 	<p>
 		<label for='related_contents_url'>Link</label>
@@ -26,20 +26,22 @@
 	<div id="related_list_multiple_box">
 		<div id="multiple-site">
 			<input type="radio" id="related_list_en" class="en" name="language_site_related_list" value="en" checked />
-			<label for="related_list_en"><?php _e('English', 'wp-odm_profile_pages'); ?></label> &nbsp;
-			<input type="radio" id="related_list_localization" class="localization" name="language_site_related_list" value="localization" />
-			<label for="related_list_localization"><?php _e(odm_language_manager()->get_the_language_by_site(), 'wp-odm_profile_pages'); ?></label>
+			<label for="related_list_en"><?php _e('English', 'wp-odm_profile_pages'); ?></label> &nbsp;    
+		  <?php if (odm_language_manager()->get_the_language_by_site() != "English"):   ?>
+        <input type="radio" id="related_list_localization" class="localization" name="language_site_related_list" value="localization" />
+  			<label for="related_list_localization"><?php _e(odm_language_manager()->get_the_language_by_site(), 'wp-odm_profile_pages'); ?></label>
+      <?php endif; ?>
 		</div>
 
 		<div id="related_list_box">
 	  	<div class="language_settings language-en">
 		  	<div id="related_list"></div>
 			</div>
-			<?php if (odm_language_manager()->get_the_language_by_site()) {   ?>
+			<?php if (odm_language_manager()->get_the_language_by_site() != "English"):   ?>
 			<div class="language_settings language-localization">
 	  		<div id="related_list_localize" class="localize_list"></div>
 			</div>
-			<?php } ?>
+      <?php endif; ?>
 		</div>
 	</div>
 
