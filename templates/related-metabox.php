@@ -2,7 +2,7 @@
 		<label for='related_contents_lable'>Label</label>
     <input id="related_contents_lable" placeholder="English" type="text" lang="en" name="related_contents_lable" value="" size="35" />
 		<?php
-		if(odm_language_manager()->get_the_language_by_site()){
+		if(odm_language_manager()->get_the_language_by_site() != "English"){
 			$localize = odm_language_manager()->languages_by_theme[odm_country_manager()->get_current_country()];	?>
 			<input id="related_contents_lable" placeholder="<?php echo odm_language_manager()->get_the_language_by_site(); ?>" type="text" name="related_contents_lable" lang="<?php echo $localize;?>" value="" size="35" />
 			<?php
