@@ -18,30 +18,16 @@ function get_related_types()
 {
 	$wp_post_types = get_post_types(array('public' => true, '_builtin' => false));
 	$ckan_types = array(
-	                "odm_dataset_type_dataset" => "dataset",
-	                "odm_dataset_type_library_record" => "library_record",
-	                "odm_dataset_type_laws_record" => "laws_record"
-	              );
+    "odm_dataset_type_dataset" => "dataset",
+    "odm_dataset_type_library_record" => "library_record",
+    "odm_dataset_type_laws_record" => "laws_record"
+  );
 
-	$relate_type = get_option("related_type");
-	if($relate_type){
-		$list_types = explode(",", $relate_type);
-		foreach ($list_types as $value) {
-			$value = trim($value);
-			if(in_array($value, $wp_post_types)) {
-				$list_related_types["odm_content_type_" . $value] = $value;
-			}elseif(in_array($value, $ckan_types)) {
-				$list_related_types["odm_dataset_type_" . $value] = $value;
-			}else {
-				$list_related_types[$value] = trim($value);
-			}
-		}
-	}else {
-		foreach ($wp_post_types as $key => $value) {
-        $wp_types[ "odm_content_type_" . $key] = $key;
-    }
-    $list_related_types = array_merge($wp_types, $ckan_types);
+	foreach ($wp_post_types as $key => $value) {
+      $wp_types[ "odm_content_type_" . $key] = $key;
   }
+  $list_related_types = array_merge($wp_types, $ckan_types);
+  
   sort($list_related_types);
   return $list_related_types;
 }

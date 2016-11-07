@@ -14,7 +14,7 @@
 		<select name="related_contents_type" id="related_contents_type">
 			<option value="">Select type</option>
 			<?php
-			$related_types = get_related_types();
+			$related_types = explode(",",get_option('related_type'));
 			foreach ($related_types as $type){
 					echo '<option value="'.$type.'">'.$type.'</option>';
 			}
