@@ -1,0 +1,7 @@
+.editorconfig
+**/.DS_STORE
+.remote-sync.json
+**.bak
+**.bak**
+**.mo
+/vendor/
