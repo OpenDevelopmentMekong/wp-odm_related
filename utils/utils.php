@@ -58,35 +58,18 @@ function get_post_id_from_url($url){
   return ;
 }
 
+function wprelated_output_template($template_url,$data,$atts){
+  ob_start();
+  require $template_url;
+  $output = ob_get_contents();
+  ob_end_clean();
+  return $output;
+}
+
 function render_template_for_related_content($related_content,$template){
 
-  if ($template == "default"): ?>
-    <ul>
-      <?php
-        $related_content = json_decode($related_content,true);
-        foreach($related_content as $key => $content):
-          $content_url = $content["url"];
-          $content_label = !empty($content["label"][odm_language_manager()->get_current_language()]) ? $content["label"][odm_language_manager()->get_current_language()] : $content["label"]["en"];
-        ?>
-        <li><a href="<?php echo $content_url; ?>"><?php echo $content_label; ?></li>
-      <?php endforeach; ?>
-    </ul>
-
-  <?php
-  elseif ($template == "html"):
-
-    $related_content = json_decode($related_content,true);
-    foreach($related_content as $key => $content):
-      $post_id = url_to_postid($content["url"]);
-
-      if ($post_id > 0):
-        $post_object = get_post( $post_id );
-        echo $post_object->post_content;
-      endif;
-
-    endforeach;
-
-  endif;
+  $atts = array();
+  echo wprelated_output_template( plugin_dir_path( __FILE__ ) . '../templates/'.$template.'-template.php',$related_content,$atts);
 
 }
 
