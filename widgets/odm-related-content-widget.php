@@ -60,7 +60,7 @@ class Odm_Related_Content_Widget extends WP_Widget {
 			<div class="sixteen columns">
         <?php
           $related_content = get_post_meta($post->ID,'related_content',true);
-          render_template_for_related_content($related_content,$type) ?>
+          render_template_for_related_content($related_content,$template) ?>
 			</div>
 
 			<?php echo $args['after_widget']; ?>

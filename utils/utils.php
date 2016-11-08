@@ -54,9 +54,13 @@ function unset_index_in_related_content($json_data){
   }
 }
 
-function render_template_for_related_content($related_content,$type){
+function get_post_id_from_url($url){
+  return ;
+}
 
-  if ($type == "topic"): ?>
+function render_template_for_related_content($related_content,$template){
+
+  if ($template == "default"): ?>
     <ul>
       <?php
         $related_content = json_decode($related_content,true);
@@ -68,7 +72,20 @@ function render_template_for_related_content($related_content,$type){
       <?php endforeach; ?>
     </ul>
 
-    <?php
+  <?php
+  elseif ($template == "html"):
+
+    $related_content = json_decode($related_content,true);
+    foreach($related_content as $key => $content):
+      $post_id = url_to_postid($content["url"]);
+
+      if ($post_id > 0):
+        $post_object = get_post( $post_id );
+        echo $post_object->post_content;
+      endif;
+
+    endforeach;
+
   endif;
 
 }
