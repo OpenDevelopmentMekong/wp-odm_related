@@ -26,7 +26,12 @@ class Odm_Related_Content_Widget extends WP_Widget {
   	foreach ($related_types as $related_type) {
       $types[$related_type] = array();
       $types[$related_type]["label"] = $related_type;
-      $types[$related_type]["templates"] = array( "default", "html", "thumbnail", "grid", "type_specific", "ckan_timeline");
+      if (in_array($related_type,array_keys(get_supported_wp_types()))):
+        $types[$related_type]["templates"] = array( "default", "html", "thumbnail", "grid", "type_specific");
+      endif;
+      if (in_array($related_type,array_keys(get_supported_ckan_types()))):
+        $types[$related_type]["templates"] = array( "default");
+      endif;
     }
 
 		return $types;
@@ -61,10 +66,16 @@ class Odm_Related_Content_Widget extends WP_Widget {
         <?php
           $related_content = get_post_meta($post->ID,'related_content',true);
           $data = json_decode($related_content,true);
+          $typed_data = array();
+          foreach ($data as $item):
+            if ($item["type"] == $type):
+              array_push($typed_data,$item);
+            endif;
+          endforeach;
           if ($limit > -1):
-            $data = array_slice($data,0,$limit);
+            $data = array_slice($typed_data,0,$limit);
           endif;
-          render_template_for_related_content($data,$template) ?>
+          render_template_for_related_content($data,$type,$template) ?>
 			</div>
 
 			<?php echo $args['after_widget']; ?>
