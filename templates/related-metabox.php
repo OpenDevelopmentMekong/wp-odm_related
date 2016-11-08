@@ -39,9 +39,9 @@
 		  	<div id="related_list"></div>
 			</div>
 			<?php if (odm_language_manager()->get_the_language_by_site() != "English"):   ?>
-			<div class="language_settings language-localization">
-	  		<div id="related_list_localize" class="localize_list"></div>
-			</div>
+  			<div class="language_settings language-localization">
+  	  		<div id="related_list_localize" class="localize_list"></div>
+  			</div>
       <?php endif; ?>
 		</div>
 	</div>

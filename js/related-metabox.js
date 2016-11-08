@@ -1,4 +1,15 @@
 var $ =jQuery.noConflict();
+$.extend({
+    keys: function(obj){
+        var a = [];
+        $.each(obj, function(k){
+          a.push(k);
+        });
+        return a;
+    }
+});
+
+
 var linkList = [];
 $(document).ready(function() {
 	get_storage_value_onload();
@@ -12,17 +23,17 @@ $(document).ready(function() {
 				label[lang] = $(this).val();
 		});
 
-		if(url != "" && type !="") {
+		if(url !== "" && type !== "") {
 			if( is_url_valid(url) ) {
 				push_item_to_json(type, url, label, index);
 				add_item_to_list_container(type, url, label, index);
 				clear_related_fields();
 				index++;
 			}else {
-				$('.related_error').html("<p>URL is not valid, please check it.</p>")
+				$('.related_error').html("<p>URL is not valid, please check it.</p>");
 			}
 		}else {
-			$('.related_error').html("<p>URL and TYPE are required.</p>")
+			$('.related_error').html("<p>URL and TYPE are required.</p>");
 		}
 
     return false;
@@ -84,7 +95,7 @@ function remove_item_from_object_with_index(item_index){
 }
 
 function get_item_from_object_with_index(item_index){
-  for (id in linkList){
+  for (var id in linkList){
     if (linkList[id]["index"] == item_index){
       return id;
     }
@@ -107,10 +118,9 @@ function set_related_list_value_onload(){
 	  for (var id in linkList){
 	    var link_item = linkList[id];
 			var label = link_item["label"];
-			if( !label.length ){
-				var hyperlink_text = label;
-			}else {
-				var hyperlink_text = link_item["url"];
+      var hyperlink_text = link_item["url"];
+			if( $.keys(label).length > 0 ){
+				hyperlink_text = label;
 			}
 			if( link_item["index"] === undefined ) {
 					link_item["index"] = id;
@@ -122,7 +132,7 @@ function set_related_list_value_onload(){
 
 function update_form_value(){
 	var linkList_json = JSON.stringify(linkList);
-	if(linkList.length!="") {
+	if(linkList.length > 0) {
 		$("#related_list_multiple_box").show();
 		$("#related_content").val(linkList_json);
 	}else {
