@@ -54,10 +54,6 @@ function unset_index_in_related_content($json_data){
   }
 }
 
-function get_post_id_from_url($url){
-  return ;
-}
-
 function wprelated_output_template($template_url,$data,$atts){
   ob_start();
   require $template_url;
