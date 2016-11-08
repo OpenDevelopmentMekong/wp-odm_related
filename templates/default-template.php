@@ -1,7 +1,6 @@
 <ul>
   <?php
-    $related_content = json_decode($data,true);
-    foreach($related_content as $key => $content):
+    foreach($data as $key => $content):
       $content_url = $content["url"];
       $content_label = !empty($content["label"][odm_language_manager()->get_current_language()]) ? $content["label"][odm_language_manager()->get_current_language()] : $content["label"]["en"];
     ?>

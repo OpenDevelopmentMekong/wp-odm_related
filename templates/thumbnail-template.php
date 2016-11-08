@@ -1,9 +1,8 @@
 <?php
-  $related_content = json_decode($data,true);
-  foreach($related_content as $key => $content):
+  foreach($data as $key => $content):
     $post_id = url_to_postid($content["url"]);
     if ($post_id > 0):
-      echo odm_get_thumbnail($post_id,true);
+      echo odm_get_thumbnail($post_id,false, array( 300, 'auto'));
     endif;
   endforeach;
 ?>
