@@ -4,7 +4,8 @@
 
     if ($post_id > 0):
       $post_object = get_post( $post_id );
-      echo $post_object->post_content;
+      $content = apply_filters('translate_text', $post_object->post_content, odm_language_manager()->get_current_language());
+      echo $content;
     endif;
 
   endforeach;
