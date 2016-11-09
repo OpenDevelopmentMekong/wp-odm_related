@@ -86,7 +86,7 @@ function render_template_for_related_content($related_content,$type,$template){
     $component = "ckan";
   endif;
 
-  echo wprelated_output_template( plugin_dir_path( __FILE__ ) . '../templates/'.$component."-".$template.'-template.php',$related_content,$atts);
+  return wprelated_output_template( plugin_dir_path( __FILE__ ) . '../templates/'.$component."-".$template.'-template.php',$related_content,$atts);
 
 }
 

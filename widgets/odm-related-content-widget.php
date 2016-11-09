@@ -55,7 +55,7 @@ class Odm_Related_Content_Widget extends WP_Widget {
 		echo $args['before_widget']; ?>
 
 		<div class="container">
-			<div class="eight columns">
+			<div class="sixteen columns">
 				<?php
 					if (!empty($instance['title'])): ?>
 						<a><?php echo $args['before_title'].apply_filters('widget_title', __($instance['title'], 'odm')).$args['after_title']; ?></a>
@@ -75,11 +75,13 @@ class Odm_Related_Content_Widget extends WP_Widget {
           if ($limit > -1):
             $data = array_slice($typed_data,0,$limit);
           endif;
-          render_template_for_related_content($data,$type,$template) ?>
+          echo render_template_for_related_content($data,$type,$template);
+        ?>
 			</div>
 
-			<?php echo $args['after_widget']; ?>
 		</div>
+
+    <?php echo $args['after_widget']; ?>
 
 	<?php
 	wp_reset_query();
