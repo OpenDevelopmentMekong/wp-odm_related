@@ -32,6 +32,9 @@ class Odm_Related_Content_Widget extends WP_Widget {
       if (in_array($related_type,array_keys(get_supported_ckan_types()))):
         $types[$related_type]["templates"] = array( "default");
       endif;
+      if (in_array($related_type,array_keys(get_supported_profile_types()))):
+        $types[$related_type]["templates"] = array( "default");
+      endif;
     }
 
 		return $types;
