@@ -4,6 +4,7 @@
 	  <?php @settings_fields('related-setttings'); ?>
 	  <?php @do_settings_fields('related-setttings'); ?>
 	  <?php
+
 		$related_type = !empty($GLOBALS['wp_odm_related_options']->get_option('related_type')) ? $GLOBALS['wp_odm_related_options']->get_option('related_type') : implode(',', get_related_types());
 		$defaul_related_type = implode(',', get_related_types());
 		?>

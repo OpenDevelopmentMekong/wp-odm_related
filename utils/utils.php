@@ -29,11 +29,17 @@ function get_supported_wp_types(){
 
   foreach ($wp_post_types as $key => $post_type):
     if (supported_post_types_option($post_type)):
-      array_push($wp_types,array($post_type => $post_type));
+      $wp_types[$post_type] = $post_type;
     endif;
   endforeach;
 
   return $wp_types;
+}
+
+function get_supported_profile_types(){
+  return array(
+    "odm_company_profile" => "odm_company_profile"
+  );
 }
 
 function get_related_types()
@@ -41,9 +47,11 @@ function get_related_types()
 
 	$ckan_types = get_supported_ckan_types();
 	$wp_types = get_supported_wp_types();
-  $list_related_types = array_merge($wp_types, $ckan_types);
+  $profile_types = get_supported_profile_types();
 
-  sort($list_related_types);
+  $list_related_types = array_merge($wp_types, $ckan_types, $profile_types);
+  //sort($list_related_types);
+
   return array_keys($list_related_types);
 }
 
