@@ -7,7 +7,7 @@ function check_requirements_related_content()
 
 function supported_post_types_option($post_type=null)
 {
-  $supported_posttypes = !empty($GLOBALS['wp_odm_related_options']->get_option('related_post_types')) ? $GLOBALS['related_post_types']->get_option('related_type') : array();
+  $supported_posttypes = !empty($GLOBALS['wp_odm_related_options']->get_option('related_post_types')) ? $GLOBALS['wp_odm_related_options']->get_option('related_post_types') : array();
   if($post_type && in_array($post_type,$supported_posttypes)){
 		return $supported_posttypes[$post_type];
 	} else {
@@ -49,7 +49,7 @@ function get_related_types()
 	$wp_types = get_supported_wp_types();
   $profile_types = get_supported_profile_types();
 
-  $list_related_types = array_merge($wp_types, $ckan_types, $profile_types);
+  $list_related_types = $wp_types + $ckan_types + $profile_types;
   //sort($list_related_types);
 
   return array_keys($list_related_types);
