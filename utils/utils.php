@@ -7,8 +7,8 @@ function check_requirements_related_content()
 
 function supported_post_types_option($post_type=null)
 {
-	$supported_posttypes = $GLOBALS['wp_odm_related_options']->get_option("related_post_types");
-	if($post_type && in_array($post_type,$supported_posttypes)){
+  $supported_posttypes = !empty($GLOBALS['wp_odm_related_options']->get_option('related_post_types')) ? $GLOBALS['related_post_types']->get_option('related_type') : array();
+  if($post_type && in_array($post_type,$supported_posttypes)){
 		return $supported_posttypes[$post_type];
 	} else {
 		return $supported_posttypes;
