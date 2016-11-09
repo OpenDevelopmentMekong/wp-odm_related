@@ -18,7 +18,7 @@
 					<td colspan="2">
 						<input class="full-width" type="text" name="related_type" id="related_type" value="<?php echo $related_type ?>"/>
 						<p class="description"><?php _e('Specify a list of comma-separated type names for selecting the TYPE of a related content on metabox and widget.', 'wp-odm_related') ?>
-						<?php _e('The default related content types are:<br/> '.$default_related_type, 'wp-odm_related') ?>
+						<?php _e('The available related content types are:<br/> '.$default_related_type, 'wp-odm_related') ?>
 						</p>
 
 					</td>
