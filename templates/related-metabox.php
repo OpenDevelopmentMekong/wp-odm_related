@@ -17,7 +17,7 @@
       $related_type = $GLOBALS['wp_odm_related_options']->get_option('related_type');
 			$related_types = explode(",",$related_type);
 			foreach ($related_types as $type){
-					echo '<option value="'.$type.'">'.$type.'</option>';
+				echo '<option value="'.$type.'">'.$type.'</option>';
 			}
 			?>
 		</select>

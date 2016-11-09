@@ -26,14 +26,12 @@ class Odm_Related_Content_Widget extends WP_Widget {
   	foreach ($related_types as $related_type) {
       $types[$related_type] = array();
       $types[$related_type]["label"] = $related_type;
-      if (in_array($related_type,array_keys(get_supported_wp_types()))):
-        $types[$related_type]["templates"] = array( "default", "html", "thumbnail", "grid", "type_specific");
-      endif;
       if (in_array($related_type,array_keys(get_supported_ckan_types()))):
         $types[$related_type]["templates"] = array( "default");
-      endif;
-      if (in_array($related_type,array_keys(get_supported_profile_types()))):
+      elseif (in_array($related_type,array_keys(get_supported_profile_types()))):
         $types[$related_type]["templates"] = array( "default");
+      else:
+        $types[$related_type]["templates"] = array( "default", "html", "thumbnail", "grid", "type_specific");
       endif;
     }
 
@@ -114,6 +112,7 @@ class Odm_Related_Content_Widget extends WP_Widget {
 				<?php endforeach; ?>
 			</select>
 		</p>
+    <p><?php print_r(array_keys(get_supported_wp_types())) ?></p>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'template' ); ?>"><?php _e( 'Select layout:' ); ?></label>
 			<select class='widefat template' id="<?php echo $this->get_field_id('template'); ?>" name="<?php echo $this->get_field_name('template'); ?>" type="text">
