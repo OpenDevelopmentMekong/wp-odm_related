@@ -1,28 +1,39 @@
 var $ =jQuery.noConflict();
+$.extend({
+    keys: function(obj){
+        var a = [];
+        $.each(obj, function(k){
+          a.push(k);
+        });
+        return a;
+    }
+});
+
+
 var linkList = [];
 $(document).ready(function() {
 	get_storage_value_onload();
 	var index = linkList.length;
 	$('#related_add_button').click(function(){
-		var type = $('#related_contents_type').val();
-		var url = $('#related_contents_url').val();
+		var type = $('#related_content_type').val();
+		var url = $('#related_content_url').val();
 		label = {};
-		$("input#related_contents_lable").each(function(){
+		$("input#related_content_label").each(function(){
 				var lang = $(this).attr("lang");
 				label[lang] = $(this).val();
 		});
 
-		if(url != "" && type !="") {
+		if(url !== "" && type !== "") {
 			if( is_url_valid(url) ) {
 				push_item_to_json(type, url, label, index);
 				add_item_to_list_container(type, url, label, index);
 				clear_related_fields();
 				index++;
 			}else {
-				$('.related_error').html("<p>URL is not valid, please check it.</p>")
+				$('.related_error').html("<p>URL is not valid, please check it.</p>");
 			}
 		}else {
-			$('.related_error').html("<p>URL and TYPE are required.</p>")
+			$('.related_error').html("<p>URL and TYPE are required.</p>");
 		}
 
     return false;
@@ -67,11 +78,11 @@ function add_item_to_list_container(type, url, label, item_index){
 		hyperlink_text_localize = url;
 	}
 
-	var link_lable_en = "<a href='"+url+"' target='_blank'>" + hyperlink_text_en + "</a> ("+type+")";
-	var link_lable_localize = "<a href='"+url+"' target='_blank'>" + hyperlink_text_localize + "</a> ("+type+")";
+	var link_label_en = "<a href='"+url+"' target='_blank'>" + hyperlink_text_en + "</a> ("+type+")";
+	var link_label_localize = "<a href='"+url+"' target='_blank'>" + hyperlink_text_localize + "</a> ("+type+")";
 	var delete_item = ' <span id="delete_item" index ="'+item_index+'" href="#">Delete</span>';
-	$("#related_list").append("<p class='item item-"+item_index+"'>" + link_lable_en + delete_item +"</p>");
-	$("#related_list_localize").append("<p class='item item-"+item_index+"'>" + link_lable_localize + delete_item +"</p>");
+	$("#related_list").append("<p class='item item-"+item_index+"'>" + link_label_en + delete_item +"</p>");
+	$("#related_list_localize").append("<p class='item item-"+item_index+"'>" + link_label_localize + delete_item +"</p>");
 }
 
 function remove_item_from_object_with_index(item_index){
@@ -84,7 +95,7 @@ function remove_item_from_object_with_index(item_index){
 }
 
 function get_item_from_object_with_index(item_index){
-  for (id in linkList){
+  for (var id in linkList){
     if (linkList[id]["index"] == item_index){
       return id;
     }
@@ -93,7 +104,7 @@ function get_item_from_object_with_index(item_index){
 }
 
 function get_storage_value_onload(){
-  var linkList_json = $("#related_contents").val();
+  var linkList_json = $("#related_content").val();
   if (linkList_json) {
 		linkList = JSON.parse(linkList_json);
 		set_related_list_value_onload();
@@ -107,10 +118,9 @@ function set_related_list_value_onload(){
 	  for (var id in linkList){
 	    var link_item = linkList[id];
 			var label = link_item["label"];
-			if( !label.length ){
-				var hyperlink_text = label;
-			}else {
-				var hyperlink_text = link_item["url"];
+      var hyperlink_text = link_item["url"];
+			if( $.keys(label).length > 0 ){
+				hyperlink_text = label;
 			}
 			if( link_item["index"] === undefined ) {
 					link_item["index"] = id;
@@ -122,20 +132,20 @@ function set_related_list_value_onload(){
 
 function update_form_value(){
 	var linkList_json = JSON.stringify(linkList);
-	if(linkList.length!="") {
+	if(linkList.length > 0) {
 		$("#related_list_multiple_box").show();
-		$("#related_contents").val(linkList_json);
+		$("#related_content").val(linkList_json);
 	}else {
 		$("#related_list_multiple_box").hide();
-		$("#related_contents").val("");
+		$("#related_content").val("");
 	}
 }
 
 function clear_related_fields(){
 	$('.related_error').text('');
-	$('#related_contents_url').val('');
-	$('#related_contents_type').val('');
-	$('input#related_contents_lable').each(function(){
+	$('#related_content_url').val('');
+	$('#related_content_type').val('');
+	$('input#related_content_label').each(function(){
 		$(this).val('');
 	});
 }

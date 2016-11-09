@@ -26,4 +26,5 @@ class ProfilePagesTest extends PHPUnit_Framework_TestCase
       $supported_post_types = supported_post_types_option();
       $this->assertEquals($supported_post_types,'topic,announcement,story');
     }
+
 }
