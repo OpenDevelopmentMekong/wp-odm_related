@@ -58,7 +58,7 @@ class Odm_Related_Content_Widget extends WP_Widget {
 			<div class="eight columns">
 				<?php
 					if (!empty($instance['title'])): ?>
-						<a href="/<?php echo $post_type_slug?>"><?php echo $args['before_title'].apply_filters('widget_title', __($instance['title'], 'odm')).$args['after_title']; ?></a>
+						<a><?php echo $args['before_title'].apply_filters('widget_title', __($instance['title'], 'odm')).$args['after_title']; ?></a>
 				<?php endif; ?>
 			</div>
 
