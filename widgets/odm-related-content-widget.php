@@ -112,7 +112,6 @@ class Odm_Related_Content_Widget extends WP_Widget {
 				<?php endforeach; ?>
 			</select>
 		</p>
-    <p><?php print_r(array_keys(get_supported_wp_types())) ?></p>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'template' ); ?>"><?php _e( 'Select layout:' ); ?></label>
 			<select class='widefat template' id="<?php echo $this->get_field_id('template'); ?>" name="<?php echo $this->get_field_name('template'); ?>" type="text">
