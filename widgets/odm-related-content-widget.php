@@ -106,8 +106,8 @@ class Odm_Related_Content_Widget extends WP_Widget {
 		<p>
 			<label for="<?php echo $this->get_field_id( 'type' ); ?>"><?php _e( 'Select content type:' ); ?></label>
 			<select class='widefat type' id="<?php echo $this->get_field_id('type'); ?>" name="<?php echo $this->get_field_name('type'); ?>" type="text">
-				<?php foreach ( $this->types  as $key => $availabel_type ): ?>
-					<option <?php if ($type == $availabel_type["label"]) { echo " selected"; } ?> value="<?php echo $key ?>"><?php echo $availabel_type["label"] ?></option>
+				<?php foreach ( $this->types  as $key => $available_type ): ?>
+					<option <?php if ($type == $available_type["label"]) { echo " selected"; } ?> value="<?php echo $key ?>"><?php echo $available_type["label"] ?></option>
 				<?php endforeach; ?>
 			</select>
 		</p>
