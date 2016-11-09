@@ -3,7 +3,7 @@
  * Plugin Name: ODM Related Contents
  * Plugin URI: http://github.com/OpenDevelopmentMekong/odm_related
  * Description: Internal wordpress plugin for associating related contents in posts with different templates to display on post's page through the widgets.
- * Version: 1.0.0
+ * Version: 1.0.1
  * Author: Huy Eng HENG
  * Author URI: https://opendevelopmentcambodia.net
  * License: GPLv3.
