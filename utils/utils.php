@@ -38,7 +38,7 @@ function get_supported_wp_types(){
 
 function get_supported_profile_types(){
   return array(
-    "odm_company_profile" => "odm_company_profile"
+    "odm_elc_profile" => "odm_elc_profile"
   );
 }
 
