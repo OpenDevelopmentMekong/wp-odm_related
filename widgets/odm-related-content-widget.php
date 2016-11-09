@@ -76,9 +76,9 @@ class Odm_Related_Content_Widget extends WP_Widget {
             endif;
           endforeach;
           if ($limit > -1):
-            $data = array_slice($typed_data,0,$limit);
+            $typed_data = array_slice($typed_data,0,$limit);
           endif;
-          echo render_template_for_related_content($data,$type,$template);
+          echo render_template_for_related_content($typed_data,$type,$template);
         ?>
 			</div>
 
