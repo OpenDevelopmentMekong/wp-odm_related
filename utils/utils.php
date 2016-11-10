@@ -25,7 +25,7 @@ function get_supported_ckan_types(){
 
 function get_supported_wp_types(){
   $wp_types = array();
-  $wp_post_types = get_post_types();
+  $wp_post_types = get_post_types(array('public' => true, '_builtin' => false));
 
   foreach ($wp_post_types as $key => $post_type):
     if (supported_post_types_option($post_type)):

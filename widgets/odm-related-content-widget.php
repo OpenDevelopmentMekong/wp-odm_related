@@ -31,7 +31,7 @@ class Odm_Related_Content_Widget extends WP_Widget {
       elseif (in_array($related_type,array_keys(get_supported_profile_types()))):
         $types[$related_type]["templates"] = array( "default");
       else:
-        $types[$related_type]["templates"] = array( "default", "html", "thumbnail", "grid", "type_specific");
+        $types[$related_type]["templates"] = array( "default", "html", "thumbnail", "grid");
       endif;
     }
 
