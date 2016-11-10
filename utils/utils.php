@@ -50,7 +50,6 @@ function get_related_types()
   $profile_types = get_supported_profile_types();
 
   $list_related_types = $wp_types + $ckan_types + $profile_types;
-  //sort($list_related_types);
 
   return array_keys($list_related_types);
 }
