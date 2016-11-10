@@ -139,8 +139,25 @@ if (!class_exists('Odm_related_content_Plugin')) {
 
           if($_POST['related_content']){
             $related_content_json = unset_index_in_related_content( $_POST['related_content']);
-              // Update the meta field.
+            // Update the meta field.
             update_post_meta( $post_ID, 'related_content', $related_content_json);
+
+            // Update individual meta fields as well
+            $all_related_types = get_related_types();
+            $related_content = json_decode(stripslashes($related_content_json), true);
+            foreach($all_related_types as $type):
+
+              //first, we delete all entries of this type
+              delete_post_meta($post_ID, $type);
+
+              //later, we add them newly
+              foreach($related_content as $content):
+                if ($content["type"] == $type):
+                  update_post_meta( $post_ID, $type, $content["url"]);
+                endif;
+              endforeach;
+
+            endforeach;
           }
         }
 
