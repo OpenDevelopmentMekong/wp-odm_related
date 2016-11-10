@@ -82,13 +82,14 @@ if (!class_exists('Odm_related_content_Plugin')) {
           sort($public_post_types);
 
           $post_type_option = supported_post_types_option();
-          foreach ( $public_post_types as $post_type) {
-               if(array_key_exists($post_type, $post_type_option)){
+          foreach ( $public_post_types as $post_type):
+            if(array_key_exists($post_type, $post_type_option)):
                  echo '<input type="checkbox" name="related_post_types['. $post_type.']" value="1" checked="checked">'.$post_type.'<br>';
-             } else {
+            else:
                  echo '<input type="checkbox" name="related_post_types['. $post_type.']" value="">'.$post_type.'<br>';
-             }
-         }
+            endif;
+          endforeach;
+
         }
 
 				/**
@@ -105,9 +106,9 @@ if (!class_exists('Odm_related_content_Plugin')) {
 				 */
 				public function plugin_settings_page()
 				{
-					if (!current_user_can('manage_options')) {
+					if (!current_user_can('manage_options')):
 							wp_die(__('You do not have sufficient permissions to access this page.'));
-					}
+					endif;
 
 					include sprintf('%s/utils/settings.php', dirname(__FILE__));
 				}
@@ -130,35 +131,38 @@ if (!class_exists('Odm_related_content_Plugin')) {
 
         public function related_save_post($post_ID)
         {
-          if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+          if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE):
               return $post_ID;
-          }
-          if (!current_user_can('edit_post', $post_ID)) {
+          endif;
+          if (!current_user_can('edit_post', $post_ID)):
               return $post_ID;
-          }
+          endif;
 
-          if($_POST['related_content']){
+          // Clean related_content and other post_meta (will be eventually added right after)
+          delete_post_meta($post_ID, 'related_content');
+
+          $all_related_types = get_related_types();
+          foreach($all_related_types as $type):
+            delete_post_meta($post_ID, $type);
+          endforeach;
+
+          if($_POST['related_content']):
+
             $related_content_json = unset_index_in_related_content( $_POST['related_content']);
-            // Update the meta field.
-            update_post_meta( $post_ID, 'related_content', $related_content_json);
 
-            // Update individual meta fields as well
-            $all_related_types = get_related_types();
+            add_post_meta( $post_ID, 'related_content', $related_content_json, true);
+
             $related_content = json_decode(stripslashes($related_content_json), true);
             foreach($all_related_types as $type):
-
-              //first, we delete all entries of this type
-              delete_post_meta($post_ID, $type);
-
-              //later, we add them newly
               foreach($related_content as $content):
                 if ($content["type"] == $type):
-                  update_post_meta( $post_ID, $type, $content["url"]);
+                  add_post_meta( $post_ID, $type, $content["url"], false);
                 endif;
               endforeach;
-
             endforeach;
-          }
+
+          endif;
+
         }
 
 		    public static function activate()
@@ -183,7 +187,7 @@ if (class_exists('Odm_related_content_Plugin')) {
 
 	$GLOBALS['related'] = new Odm_related_content_Plugin();
 
-  if(isset($GLOBALS['related'])){
+  if(isset($GLOBALS['related'])):
 
     // Add a link to the settings page onto the plugin page
     function add_related_settings_link($links)
@@ -197,6 +201,6 @@ if (class_exists('Odm_related_content_Plugin')) {
     $plugin = plugin_basename(__FILE__);
     add_filter("plugin_action_links_$plugin", 'add_related_settings_link');
 
-  }
+  endif;
 
 }
