@@ -50,30 +50,8 @@ function get_related_types()
   $profile_types = get_supported_profile_types();
 
   $list_related_types = $wp_types + $ckan_types + $profile_types;
-  //sort($list_related_types);
 
   return array_keys($list_related_types);
-}
-
-function unset_index_in_related_content($json_data){
-  if($json_data){
-    $related_content_arr = json_decode(stripslashes($json_data), true);
-    if($related_content_arr){
-      foreach ($related_content_arr as $related_key => $related_arr) {
-        if(isset($related_arr['index'])){
-          unset($related_arr['index']);
-        }
-        $related_content_no_index[] = $related_arr;
-      }
-
-      if($related_content_no_index){
-        $related_content = json_encode($related_content_no_index);
-        return $related_content;
-      }
-    }
-
-    return $json_data;
-  }
 }
 
 function wprelated_output_template($template_url,$data,$atts){

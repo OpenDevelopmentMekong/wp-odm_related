@@ -148,11 +148,11 @@ if (!class_exists('Odm_related_content_Plugin')) {
 
           if($_POST['related_content']):
 
-            $related_content_json = unset_index_in_related_content( $_POST['related_content']);
+            $related_content_json = $_POST['related_content'];
+            $related_content = json_decode(stripslashes($related_content_json), true);
 
             add_post_meta( $post_ID, 'related_content', $related_content_json, true);
 
-            $related_content = json_decode(stripslashes($related_content_json), true);
             foreach($all_related_types as $type):
               foreach($related_content as $content):
                 if ($content["type"] == $type):
