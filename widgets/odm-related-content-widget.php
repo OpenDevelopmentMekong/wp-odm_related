@@ -52,40 +52,43 @@ class Odm_Related_Content_Widget extends WP_Widget {
     $limit = isset($instance['limit']) ? $instance['limit'] : -1;
     $type = isset($instance['type']) ? $instance['type'] : 'dataset';
 		$template = isset($instance['template']) ? $instance['template'] : 'default';
+		$related_content = get_post_meta($post->ID,'related_content',true);
+		$data = json_decode($related_content,true);
+		
+		if ($data !== null):
 
-		echo $args['before_widget']; ?>
+			echo $args['before_widget']; ?>
 
-		<div class="container">
-			<div class="sixteen columns">
-				<?php
-					if (!empty($instance['title'])): ?>
-						<a><?php echo $args['before_title'].apply_filters('widget_title', __($instance['title'], 'odm')).$args['after_title']; ?></a>
-				<?php endif; ?>
+			<div class="container">
+				<div class="sixteen columns">
+					<?php
+						if (!empty($instance['title'])): ?>
+							<a><?php echo $args['before_title'].apply_filters('widget_title', __($instance['title'], 'odm')).$args['after_title']; ?></a>
+					<?php endif; ?>
+				</div>
+
+				<div class="sixteen columns">
+	        <?php          
+	          $typed_data = array();
+	          foreach ($data as $item):
+	            if ($item["type"] == $type):
+	              array_push($typed_data,$item);
+	            endif;
+	          endforeach;
+	          if ($limit > -1):
+	            $typed_data = array_slice($typed_data,0,$limit);
+	          endif;
+	          echo render_template_for_related_content($typed_data,$type,$template);
+	        ?>
+				</div>
+
 			</div>
 
-			<div class="sixteen columns">
-        <?php
-          $related_content = get_post_meta($post->ID,'related_content',true);
-          $data = json_decode($related_content,true);
-          $typed_data = array();
-          foreach ($data as $item):
-            if ($item["type"] == $type):
-              array_push($typed_data,$item);
-            endif;
-          endforeach;
-          if ($limit > -1):
-            $typed_data = array_slice($typed_data,0,$limit);
-          endif;
-          echo render_template_for_related_content($typed_data,$type,$template);
-        ?>
-			</div>
+	    <?php echo $args['after_widget']; ?>
 
-		</div>
-
-    <?php echo $args['after_widget']; ?>
-
-	<?php
-	wp_reset_query();
+		<?php
+			wp_reset_query();
+		endif;
 	}
 
 
