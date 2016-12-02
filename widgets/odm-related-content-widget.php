@@ -52,9 +52,14 @@ class Odm_Related_Content_Widget extends WP_Widget {
     $limit = isset($instance['limit']) ? $instance['limit'] : -1;
     $type = isset($instance['type']) ? $instance['type'] : 'dataset';
 		$template = isset($instance['template']) ? $instance['template'] : 'default';
+    $max_height = isset($instance['max_height']) ? $instance['max_height'] : '200';
 		$related_content = get_post_meta($post->ID,'related_content',true);
 		$data = json_decode($related_content,true);
-		
+		$set_max_height = null;
+		if($template == "html"){
+			$set_max_height = " style='max-height:".$max_height."px; overflow-y:auto;'";
+		}
+
 		if ($data !== null):
 
 			echo $args['before_widget']; ?>
@@ -67,8 +72,8 @@ class Odm_Related_Content_Widget extends WP_Widget {
 					<?php endif; ?>
 				</div>
 
-				<div class="sixteen columns">
-	        <?php          
+				<div class="sixteen columns"<?php echo $set_max_height; ?>>
+	        <?php
 	          $typed_data = array();
 	          foreach ($data as $item):
 	            if ($item["type"] == $type):
@@ -102,7 +107,9 @@ class Odm_Related_Content_Widget extends WP_Widget {
     $title = !empty($instance['title']) ? $instance['title'] : 'Related content';
     $limit = isset($instance['limit']) ? $instance['limit'] : -1;
     $type = isset($instance['type']) ? $instance['type'] : 'dataset';
-		$template = isset($instance['template']) ? $instance['template'] : 'default';?>
+		$template = isset($instance['template']) ? $instance['template'] : 'default';
+    $max_height = isset($instance['max_height']) ? $instance['max_height'] : '200';
+		?>
 		<p>
 			<label for="<?php echo $this->get_field_id('title');?>"><?php _e('Title:');?></label>
 			<input class="widefat" id="<?php echo $this->get_field_id('title');?>" name="<?php echo $this->get_field_name('title');?>" type="text" value="<?php _e($title,'odm');?>">
@@ -126,10 +133,37 @@ class Odm_Related_Content_Widget extends WP_Widget {
 			</select>
 		</p>
 		<?php $limit = !empty($instance['limit']) ? $instance['limit'] : -1 ?>
-		<p>
+		<p class="<?php echo $this->get_field_id('limit');?>">
 			<label for="<?php echo $this->get_field_id( 'limit' ); ?>"><?php _e( 'Select max number of posts to list (-1 to show all):' ); ?></label>
 			<input class="widefat" id="<?php echo $this->get_field_id('limit');?>" name="<?php echo $this->get_field_name('limit');?>" type="number" value="<?php echo $limit;?>">
 		</p>
+			<?php $max_height = !empty($instance['max_height']) ? $instance['max_height'] : '200' ?>
+		<p class="<?php echo $this->get_field_id('max_height');?>">
+			<label for="<?php echo $this->get_field_id( 'max_height' ); ?>"><?php _e( 'Define the max height of container:' ); ?></label>
+			<input class="widefat" id="<?php echo $this->get_field_id('max_height');?>" name="<?php echo $this->get_field_name('max_height');?>" type="number" value="<?php echo $max_height;?>">
+		</p>
+
+		<script type="text/javascript">
+			jQuery(function($) {
+				var $select_template = "<?php echo $this->get_field_id('template'); ?>";
+				display_max_height();
+				$('#'+$select_template).change(function(){
+					display_max_height();
+				});
+
+				function display_max_height (){
+					var $p_limit =  "<?php echo $this->get_field_id('limit');?>";
+					var $p_max_height =  "<?php echo $this->get_field_id('max_height');?>";
+					if($('#'+$select_template).val() == "html"){
+						$('.'+$p_limit).hide();
+						$('.'+$p_max_height).show();
+					}else{
+						$('.'+$p_limit).show();
+						$('.'+$p_max_height).hide();
+					}
+				}
+			});
+	 </script>
 
 		<?php
 	}
@@ -147,6 +181,7 @@ class Odm_Related_Content_Widget extends WP_Widget {
 		$instance['limit'] = (!empty($new_instance['limit'])) ? $new_instance['limit'] : -1;
 		$instance['type'] = (!empty( $new_instance['type'])) ? $new_instance['type'] : 'dataset';
 		$instance['template'] = (!empty( $new_instance['template'])) ? $new_instance['template'] : 'default';
+		$instance['max_height'] = (!empty( $new_instance['max_height'])) ? $new_instance['max_height'] : '200';
 
 		return $instance;
 	}
