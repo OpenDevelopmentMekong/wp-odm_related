@@ -6,8 +6,8 @@
     ?>
     <li>
       <?php
-        if ($atts["type"] == "odm_elc_profile"): ?>
-          <i class="fa fa-building"></i>
+        if ($atts["type"] == "od_profile"): ?>
+          <i class="fa fa-table"></i>
       <?php
         endif;?>
       <a href="<?php echo $content_url; ?>"><?php echo $content_label; ?></a></li>
