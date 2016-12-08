@@ -63,9 +63,9 @@ function wprelated_output_template($template_url,$data,$atts){
 }
 
 function render_template_for_related_content($related_content,$type,$template){
-
+	$type = trim($type);
   $atts = array("type" => $type);
-  $component = null;
+  $component = null; 
   if (in_array($type,array_keys(get_supported_wp_types()))):
     $component = "wp";
   elseif (in_array($type,array_keys(get_supported_ckan_types()))):
