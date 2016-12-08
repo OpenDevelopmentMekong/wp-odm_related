@@ -12,7 +12,16 @@ $.extend({
 
 var linkList = [];
 $(document).ready(function() {
+
 	get_storage_value_onload();
+  show_Related_list();
+
+  var $language_Selection = $('input[type="radio"]');
+    $language_Selection.on('change', function() {
+    $('.' + this.className).prop('checked', this.checked);
+    show_Related_list();
+  });
+
 	var index = linkList.length;
 	$('#related_add_button').click(function(){
 		var type = $('#related_content_type').val();
@@ -46,6 +55,13 @@ $(document).ready(function() {
 	});
 
 }); //$(document).ready
+
+function show_Related_list(){
+  var $forms = $('.language_settings');
+  $forms.hide();
+  var selected = $('input[type="radio"][name=language_site_related_list]').filter(':checked').val();
+  $('.language-' + selected).show();
+}
 
 function push_item_to_json(type, url, label, item_index){
 	item = {};
