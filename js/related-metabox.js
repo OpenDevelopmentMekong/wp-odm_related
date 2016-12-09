@@ -39,10 +39,56 @@ $(document).ready(function() {
     return false;
 	});
 
-	$('#related_list_box').on('click', '#delete_item', function() {
+	$('#related_list_box').on('click', '#delete_item', function()
+	{
 			var item_index = $(this).attr("index");
 	  	$('.item-'+item_index).remove();
 	  	remove_item_from_object_with_index(item_index);
+	});
+
+	$('#related_list_box').on('click', '#edit_item', function()
+	{
+			var item_index = $(this).attr("index");
+			var edit_label = linkList[item_index].label;
+			$.each(edit_label, function(key){
+				$("input[id='related_content_label'][lang='"+key+"']").val(edit_label[key]);
+			});
+			$('#related_content_url').val(linkList[item_index].url);
+			$('#related_content_type').val(linkList[item_index].type);
+
+			$('.related_content_form').append("<input type='hidden' class='update_item' id='item' value='"+item_index+"' name='item_index' /> ");
+			$('#related_update_button').show();
+			$('#related_cancel_button').show();
+			$('#related_add_button').hide();
+	});
+
+	$('#related_update_button').click(function(){
+		var update_index = $('.update_item').val();
+		var update_type = $('#related_content_type').val();
+		var update_url = $('#related_content_url').val();
+		update_label = {};
+		$("input#related_content_label").each(function(){
+				var lang = $(this).attr("lang");
+				update_label[lang] = $(this).val();
+		});
+
+		if(update_url !== "" && update_type !== "") {
+			if( is_url_valid(update_url) ) {
+				push_update_item_to_json(update_type, update_url, update_label, update_index);
+				update_item_to_list_container(update_type, update_url, update_label, update_index);
+			}else {
+				$('.related_error').html("<p>URL is not valid, please check it.</p>");
+			}
+		}else {
+			$('.related_error').html("<p>URL and TYPE are required.</p>");
+		}
+
+		clear_related_fields();
+		$('#related_update_button').hide();
+		$('#related_cancel_button').hide();
+		$('#related_add_button').show();
+
+		return false;
 	});
 
 }); //$(document).ready
@@ -57,7 +103,56 @@ function push_item_to_json(type, url, label, item_index){
 	update_form_value();
 }
 
+function push_update_item_to_json(type, url, label, item_index){
+	console.log(item_index);
+	console.log(linkList);
+	linkList[item_index].label = label;
+	linkList[item_index].type = type;
+	linkList[item_index].url = url;
+	console.log(linkList);
+
+}
+
 function add_item_to_list_container(type, url, label, item_index){
+
+	var hyperlink_text = get_hyperlink_lable(label, url);
+
+	var link_label_en = "<a href='"+url+"' target='_blank'>" + hyperlink_text['en'] + "</a> <span class='related-type'>("+type+")</span>";
+
+	var edit_item = ' <span id="edit_item" index ="'+item_index+'" href="#"><span class="dashicons dashicons-edit"></span></span>';
+	var delete_item = ' <span id="delete_item" index ="'+item_index+'" href="#"><span class="dashicons dashicons-no"></span></span>';
+	$("#related_list").append("<p class='item item-"+item_index+"'>" + link_label_en + edit_item + delete_item + "</p>");
+	if($(".related_list_localize").length){
+		var link_label_localize = "<a href='"+url+"' target='_blank'>" + hyperlink_text['localize'] + "</a> <span class='related-type'>("+type+")</span>";
+		$("#related_list_localize").append("<p class='item item-"+item_index+"'>" + link_label_localize + edit_item + delete_item +"</p>");
+	}
+}
+
+function update_item_to_list_container(type, url, label, item_index){
+	var hyperlink_text = get_hyperlink_lable(label, url);
+	console.log(hyperlink_text);
+	console.log("item_index "+item_index);
+	$("#related_list .item-"+item_index + " a").attr("href", url);
+	$("#related_list .item-"+item_index + " a").text(hyperlink_text['en']);
+	$("#related_list .item-"+item_index + " .related-type").text("("+type+")");
+	if($("#related_list_multiple_box").has('#related_list_localize')){
+		$("#related_list_localize .item-"+item_index + " a").text(hyperlink_text['localize']);
+		$("#related_list_localize .item-"+item_index + " a").attr("href", url);
+		$("#related_list_localize .item-"+item_index + " .related-type").text("("+type+")");
+	}
+
+}
+
+function remove_item_from_object_with_index(item_index){
+	var link_index = get_item_from_object_with_index(item_index);
+	if (link_index){
+    linkList.splice(link_index,1);
+		update_form_value();
+    return;
+  }
+}
+
+function get_hyperlink_lable (label, url) {
 	var hyperlink_text_en;
 	var hyperlink_text_localize;
 
@@ -77,21 +172,11 @@ function add_item_to_list_container(type, url, label, item_index){
 	if(!hyperlink_text_localize){
 		hyperlink_text_localize = url;
 	}
+	hyperlink_text = {};
+	hyperlink_text['en'] = hyperlink_text_en;
+	hyperlink_text['localize'] = hyperlink_text_localize;
 
-	var link_label_en = "<a href='"+url+"' target='_blank'>" + hyperlink_text_en + "</a> ("+type+")";
-	var link_label_localize = "<a href='"+url+"' target='_blank'>" + hyperlink_text_localize + "</a> ("+type+")";
-	var delete_item = ' <span id="delete_item" index ="'+item_index+'" href="#">Delete</span>';
-	$("#related_list").append("<p class='item item-"+item_index+"'>" + link_label_en + delete_item +"</p>");
-	$("#related_list_localize").append("<p class='item item-"+item_index+"'>" + link_label_localize + delete_item +"</p>");
-}
-
-function remove_item_from_object_with_index(item_index){
-	var link_index = get_item_from_object_with_index(item_index);
-	if (link_index){
-    linkList.splice(link_index,1);
-		update_form_value();
-    return;
-  }
+	return hyperlink_text;
 }
 
 function get_item_from_object_with_index(item_index){
@@ -147,7 +232,8 @@ function clear_related_fields(){
 	$('#related_content_type').val('');
 	$('input#related_content_label').each(function(){
 		$(this).val('');
-	});
+	});	
+	$('.update_item').remove();
 }
 
 function is_url_valid(url) {
