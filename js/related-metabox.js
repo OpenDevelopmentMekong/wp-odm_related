@@ -72,7 +72,7 @@ $(document).ready(function() {
 				update_label[lang] = $(this).val();
 		});
 
-		if(update_url !== "" && update_type !== "") {
+		if(update_type !== "" && update_url !== "" ) {
 			if( is_url_valid(update_url) ) {
 				push_update_item_to_json(update_type, update_url, update_label, update_index);
 				update_item_to_list_container(update_type, update_url, update_label, update_index);
@@ -91,6 +91,13 @@ $(document).ready(function() {
 		return false;
 	});
 
+	$('#related_cancel_button').click(function(){
+		clear_related_fields();
+		$('#related_update_button').hide();
+		$('#related_cancel_button').hide();
+		$('#related_add_button').show();
+	});
+
 }); //$(document).ready
 
 function push_item_to_json(type, url, label, item_index){
@@ -104,13 +111,10 @@ function push_item_to_json(type, url, label, item_index){
 }
 
 function push_update_item_to_json(type, url, label, item_index){
-	console.log(item_index);
-	console.log(linkList);
 	linkList[item_index].label = label;
 	linkList[item_index].type = type;
 	linkList[item_index].url = url;
-	console.log(linkList);
-
+	update_form_value();
 }
 
 function add_item_to_list_container(type, url, label, item_index){
@@ -122,7 +126,7 @@ function add_item_to_list_container(type, url, label, item_index){
 	var edit_item = ' <span id="edit_item" index ="'+item_index+'" href="#"><span class="dashicons dashicons-edit"></span></span>';
 	var delete_item = ' <span id="delete_item" index ="'+item_index+'" href="#"><span class="dashicons dashicons-no"></span></span>';
 	$("#related_list").append("<p class='item item-"+item_index+"'>" + link_label_en + edit_item + delete_item + "</p>");
-	if($(".related_list_localize").length){
+	if($("#related_list_localize").length){
 		var link_label_localize = "<a href='"+url+"' target='_blank'>" + hyperlink_text['localize'] + "</a> <span class='related-type'>("+type+")</span>";
 		$("#related_list_localize").append("<p class='item item-"+item_index+"'>" + link_label_localize + edit_item + delete_item +"</p>");
 	}
@@ -130,8 +134,6 @@ function add_item_to_list_container(type, url, label, item_index){
 
 function update_item_to_list_container(type, url, label, item_index){
 	var hyperlink_text = get_hyperlink_lable(label, url);
-	console.log(hyperlink_text);
-	console.log("item_index "+item_index);
 	$("#related_list .item-"+item_index + " a").attr("href", url);
 	$("#related_list .item-"+item_index + " a").text(hyperlink_text['en']);
 	$("#related_list .item-"+item_index + " .related-type").text("("+type+")");
@@ -140,7 +142,6 @@ function update_item_to_list_container(type, url, label, item_index){
 		$("#related_list_localize .item-"+item_index + " a").attr("href", url);
 		$("#related_list_localize .item-"+item_index + " .related-type").text("("+type+")");
 	}
-
 }
 
 function remove_item_from_object_with_index(item_index){
@@ -232,7 +233,7 @@ function clear_related_fields(){
 	$('#related_content_type').val('');
 	$('input#related_content_label').each(function(){
 		$(this).val('');
-	});	
+	});
 	$('.update_item').remove();
 }
 
