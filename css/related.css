@@ -2,6 +2,9 @@
 	cursor: pointer;
 	color: red;
 }
+#edit_item {
+	cursor: pointer;
+}
 #related_list_multiple_box {
 	display: none;
 }
@@ -9,4 +12,7 @@
 	border:1px solid #ddd;
 	padding: 0 10px;
 	margin: 10px 0 0;
+}
+#related_update_button, #related_cancel_button {
+	display: none;
 }
