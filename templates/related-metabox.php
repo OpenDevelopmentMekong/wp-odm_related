@@ -40,11 +40,11 @@
 
 		<div id="related_list_box">
 	  	<div class="language_settings language-en">
-		  	<div id="related_list"></div>
+		  	<div id="related_list" class="related_list"></div>
 			</div>
 			<?php if (odm_language_manager()->get_the_language_by_site() != "English"):   ?>
   			<div class="language_settings language-localization">
-  	  		<div id="related_list_localize" class="localize_list"></div>
+  	  		<div id="related_list_localize" class="localize_list related_list"></div>
   			</div>
       <?php endif; ?>
 		</div>

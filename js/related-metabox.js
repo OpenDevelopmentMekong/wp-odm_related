@@ -14,6 +14,12 @@ var linkList = [];
 $(document).ready(function() {
 
 	get_storage_value_onload();
+	var index = 1;
+  if(linkList.length){
+	   var max_index = Math.max.apply(Math,linkList.map(function(l){return l.index;}));
+     index = max_index + 1;
+  }
+
   show_Related_list();
 
   var $language_Selection = $('input[type="radio"]');
@@ -21,8 +27,7 @@ $(document).ready(function() {
     $('.' + this.className).prop('checked', this.checked);
     show_Related_list();
   });
-
-	var index = linkList.length;
+ 
 	$('#related_add_button').click(function(){
 		var type = $('#related_content_type').val();
 		var url = $('#related_content_url').val();
@@ -57,18 +62,19 @@ $(document).ready(function() {
 
 	$('#related_list_box').on('click', '#edit_item', function()
 	{
-			var item_index = $(this).attr("index");
+			var edit_item_index = $(this).attr("index");
+			var item_index = get_item_from_object_with_index(edit_item_index);
 			var edit_label = linkList[item_index].label;
-			$.each(edit_label, function(key){
-				$("input[id='related_content_label'][lang='"+key+"']").val(edit_label[key]);
-			});
-			$('#related_content_url').val(linkList[item_index].url);
-			$('#related_content_type').val(linkList[item_index].type);
+				$.each(edit_label, function(key){
+					$("input[id='related_content_label'][lang='"+key+"']").val(edit_label[key]);
+				});
+				$('#related_content_url').val(linkList[item_index].url);
+				$('#related_content_type').val(linkList[item_index].type);
 
-			$('.related_content_form').append("<input type='hidden' class='update_item' id='item' value='"+item_index+"' name='item_index' /> ");
-			$('#related_update_button').show();
-			$('#related_cancel_button').show();
-			$('#related_add_button').hide();
+				$('.related_content_form').append("<input type='hidden' class='update_item' id='item' value='"+edit_item_index+"' name='item_index' /> ");
+				$('#related_update_button').show();
+				$('#related_cancel_button').show();
+				$('#related_add_button').hide();
 	});
 
 	$('#related_update_button').click(function(){
@@ -107,7 +113,36 @@ $(document).ready(function() {
 		$('#related_add_button').show();
 	});
 
+  var current_related_list, pre;
+  $(".related_list").sortable({
+      start:function(event, ui){
+          pre = ui.item.index();
+      },
+      stop: function(event, ui) {
+          current_related_list = $(this).attr('id');
+          post = ui.item.index();
+          other = (current_related_list == 'related_list') ? 'related_list_localize' : 'related_list';
+          //Use insertBefore if moving UP, or insertAfter if moving DOWN
+          if (post > pre) {
+              $('#'+other+ ' p.item:eq(' +pre+ ')').insertAfter('#'+other+ ' p.item:eq(' +post+ ')');
+          }else{
+              $('#'+other+ ' p.item:eq(' +pre+ ')').insertBefore('#'+other+ ' p.item:eq(' +post+ ')');
+          }
+          $($("#"+current_related_list+ " p.item").get()).each(function (index) {
+            var item_index = $(this).children(" #edit_item").attr('index');
+            chnage_related_item_order(item_index, index);
+         });
+      }
+  }).disableSelection();
+
 }); //$(document).ready
+
+function chnage_related_item_order(item_index, order) {
+  console.log("Item index " + item_index +" order " + order);
+	var id = get_item_from_object_with_index(item_index);
+	linkList[id].order = order;
+	update_form_value();
+}
 
 function show_Related_list(){
   var $forms = $('.language_settings');
@@ -122,19 +157,20 @@ function push_item_to_json(type, url, label, item_index){
 	item ["type"] = type;
 	item ["url"] = url;
 	item ["label"] = label;
+	item ["order"] = item_index;
 	linkList.push(item);
 	update_form_value();
 }
 
 function push_update_item_to_json(type, url, label, item_index){
-	linkList[item_index].label = label;
-	linkList[item_index].type = type;
-	linkList[item_index].url = url;
+	var id = get_item_from_object_with_index(item_index);
+	linkList[id].label = label;
+	linkList[id].type = type;
+	linkList[id].url = url;
 	update_form_value();
 }
 
 function add_item_to_list_container(type, url, label, item_index){
-
 	var hyperlink_text = get_hyperlink_lable(label, url);
 
 	var link_label_en = "<a href='"+url+"' target='_blank'>" + hyperlink_text['en'] + "</a> <span class='related-type'>("+type+")</span>";
@@ -209,11 +245,14 @@ function get_storage_value_onload(){
   var linkList_json = $("#related_content").val();
   if (linkList_json) {
 		linkList = JSON.parse(linkList_json);
+    console.log(linkList_json);
+		linkList.sort(function(a, b) {
+		    return parseFloat(a.order) - parseFloat(b.order);
+		});
 		set_related_list_value_onload();
 	}
 	update_form_value();
 }
-
 
 function set_related_list_value_onload(){
 	if(linkList){
@@ -224,10 +263,8 @@ function set_related_list_value_onload(){
 			if( $.keys(label).length > 0 ){
 				hyperlink_text = label;
 			}
-			if( link_item["index"] === undefined ) {
-					link_item["index"] = id;
-			}
-			add_item_to_list_container(link_item["type"], link_item["url"], hyperlink_text, id);
+			//add_item_to_list_container(link_item["type"], link_item["url"], hyperlink_text, id);
+			add_item_to_list_container(link_item["type"], link_item["url"], hyperlink_text, link_item["index"]);
 	  }
 	}
 }
