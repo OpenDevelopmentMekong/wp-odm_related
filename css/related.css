@@ -16,3 +16,6 @@
 #related_update_button, #related_cancel_button {
 	display: none;
 }
+p.item {
+	cursor: move;
+}

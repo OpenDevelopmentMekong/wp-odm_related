@@ -12,6 +12,7 @@ $.extend({
 
 var linkList = [];
 $(document).ready(function() {
+
 	get_storage_value_onload();
 	var index = 1;
   if(linkList.length){
@@ -19,6 +20,14 @@ $(document).ready(function() {
      index = max_index + 1;
   }
 
+  show_Related_list();
+
+  var $language_Selection = $('input[type="radio"]');
+    $language_Selection.on('change', function() {
+    $('.' + this.className).prop('checked', this.checked);
+    show_Related_list();
+  });
+ 
 	$('#related_add_button').click(function(){
 		var type = $('#related_content_type').val();
 		var url = $('#related_content_url').val();
@@ -103,7 +112,7 @@ $(document).ready(function() {
 		$('#related_cancel_button').hide();
 		$('#related_add_button').show();
 	});
-  
+
   var current_related_list, pre;
   $(".related_list").sortable({
       start:function(event, ui){
@@ -133,6 +142,13 @@ function chnage_related_item_order(item_index, order) {
 	var id = get_item_from_object_with_index(item_index);
 	linkList[id].order = order;
 	update_form_value();
+}
+
+function show_Related_list(){
+  var $forms = $('.language_settings');
+  $forms.hide();
+  var selected = $('input[type="radio"][name=language_site_related_list]').filter(':checked').val();
+  $('.language-' + selected).show();
 }
 
 function push_item_to_json(type, url, label, item_index){
