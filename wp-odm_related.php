@@ -156,7 +156,7 @@ if (!class_exists('Odm_related_content_Plugin')) {
             foreach($all_related_types as $type):
               foreach($related_content as $content):
                 if ($content["type"] == $type):
-                  add_post_meta( $post_ID, $type, $content["url"], false);
+                  add_post_meta( $post_ID, $type, json_encode($content["url"]), false);
                 endif;
               endforeach;
             endforeach;
