@@ -146,7 +146,7 @@ if (!class_exists('Odm_related_content_Plugin')) {
             delete_post_meta($post_ID, $type);
           endforeach;
 
-          if($_POST['related_content']):
+          if(isset($_POST['related_content'])):
 
             $related_content_json = $_POST['related_content'];
             $related_content = json_decode(stripslashes($related_content_json), true);

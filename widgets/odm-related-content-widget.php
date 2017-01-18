@@ -59,13 +59,15 @@ class Odm_Related_Content_Widget extends WP_Widget {
 		if($template == "html"){
 			$set_max_height = " style='max-height:".$max_height."px; overflow-y:auto;'";
 		}
-		
+
 		$typed_data = array();
-		foreach ($data as $item):
-			if ($item["type"] == $type):
-				array_push($typed_data,$item);
-			endif;
-		endforeach;
+		if($data):
+			foreach ($data as $item):
+				if ($item["type"] == $type):
+					array_push($typed_data,$item);
+				endif;
+			endforeach;
+		endif;
 
 		if ($data !== null && !empty($typed_data)):
 
