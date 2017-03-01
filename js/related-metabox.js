@@ -22,7 +22,7 @@ $(document).ready(function() {
 
   show_Related_list();
 
-  var $language_Selection = $('input[type="radio"]');
+  var $language_Selection = $('input[type="radio"][name="language_site_related_list"]');
     $language_Selection.on('change', function() {
     $('.' + this.className).prop('checked', this.checked);
     show_Related_list();
