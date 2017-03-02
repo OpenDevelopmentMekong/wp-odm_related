@@ -142,9 +142,12 @@ if (!class_exists('Odm_related_content_Plugin')) {
           delete_post_meta($post_ID, 'related_content');
 
           $all_related_types = get_related_types();
-          foreach($all_related_types as $type):
-            delete_post_meta($post_ID, $type);
-          endforeach;
+
+					//if(isset($all_related_types) && !empty($all_related_types)):
+	          foreach($all_related_types as $type):
+	            delete_post_meta($post_ID, $type);
+	          endforeach;
+					//endif;
 
           if(isset($_POST['related_content'])):
 
