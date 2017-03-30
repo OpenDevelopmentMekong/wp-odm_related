@@ -1,51 +1,83 @@
-"Project-Id-Version: wp-odm_related\n"
-"POT-Creation-Date: 2016-11-07 11:37+0100\n"
-"PO-Revision-Date: 2016-11-07 11:37+0100\n"
-"Language-Team: Khmer (https://www.transifex.com/open-development-mekong/teams/27158/km/)\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2017-03-30 23:57+0200\n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
 "Language: km\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Basepath: ..\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: _;_e;__;_n:1,2;_x:1,2c;_ex:1,2c\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Generator: Poedit 1.8.7.1\n"
 "X-Poedit-SearchPath-0: i18n\n"
 "X-Poedit-SearchPath-1: .\n"
 "X-Poedit-SearchPathExcluded-0: components\n"
 "X-Poedit-SearchPathExcluded-1: vendor\n"
-"X-Poedit-SourceCharset: UTF-8\n"
 
-#: templates/related-metabox.php:29
+#: templates/related-metabox.php:40
 msgid "English"
 msgstr ""
 
-#: utils/settings.php:13
-msgid "Related Content Types"
+#: utils/settings.php:15
+msgid "Supported related content types"
 msgstr ""
 
-#: utils/settings.php:17
+#: utils/settings.php:20
 msgid ""
 "Specify a list of comma-separated type names for selecting the TYPE of a "
 "related content on metabox and widget."
 msgstr ""
 
-#: utils/settings.php:18
-msgid "The default related content types are:<br/> "
+#: utils/settings.php:21
+msgid "The available related content types are:<br/> "
 msgstr ""
 
-#: wp-odm_related.php:62
+#: widgets/odm-related-content-widget.php:13
+msgid "ODM Related Content Widget"
+msgstr ""
+
+#: widgets/odm-related-content-widget.php:14
+msgid "Displays content related to the current post with different templates"
+msgstr ""
+
+#: widgets/odm-related-content-widget.php:117
+msgid "Title:"
+msgstr ""
+
+#: widgets/odm-related-content-widget.php:121
+msgid "Select content type:"
+msgstr ""
+
+#: widgets/odm-related-content-widget.php:129
+msgid "Select layout:"
+msgstr ""
+
+#: widgets/odm-related-content-widget.php:140
+msgid "Select max number of posts to list (-1 to show all):"
+msgstr ""
+
+#: widgets/odm-related-content-widget.php:145
+msgid "Define the max height of container:"
+msgstr ""
+
+#: wp-odm_related.php:63
 msgid "Post Types"
 msgstr ""
 
-#: wp-odm_related.php:69
+#: wp-odm_related.php:70
 msgid "Post Types that require related contents "
 msgstr ""
 
-#: wp-odm_related.php:108
+#: wp-odm_related.php:110
 msgid "You do not have sufficient permissions to access this page."
 msgstr ""
 
-#: wp-odm_related.php:116
+#: wp-odm_related.php:118
 msgid "Add related contents"
 msgstr ""

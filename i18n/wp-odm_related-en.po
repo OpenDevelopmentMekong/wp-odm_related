@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: wp-odm_related\n"
-"POT-Creation-Date: 2016-11-07 11:37+0100\n"
-"PO-Revision-Date: 2016-11-07 11:37+0100\n"
+"POT-Creation-Date: 2017-03-30 23:56+0200\n"
+"PO-Revision-Date: 2017-03-30 23:56+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en\n"
@@ -20,36 +20,64 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-0: components\n"
 "X-Poedit-SearchPathExcluded-1: vendor\n"
 
-#: templates/related-metabox.php:29
+#: templates/related-metabox.php:40
 msgid "English"
 msgstr ""
 
-#: utils/settings.php:13
-msgid "Related Content Types"
+#: utils/settings.php:15
+msgid "Supported related content types"
 msgstr ""
 
-#: utils/settings.php:17
+#: utils/settings.php:20
 msgid ""
 "Specify a list of comma-separated type names for selecting the TYPE of a "
 "related content on metabox and widget."
 msgstr ""
 
-#: utils/settings.php:18
-msgid "The default related content types are:<br/> "
+#: utils/settings.php:21
+msgid "The available related content types are:<br/> "
 msgstr ""
 
-#: wp-odm_related.php:62
+#: widgets/odm-related-content-widget.php:13
+msgid "ODM Related Content Widget"
+msgstr ""
+
+#: widgets/odm-related-content-widget.php:14
+msgid "Displays content related to the current post with different templates"
+msgstr ""
+
+#: widgets/odm-related-content-widget.php:117
+msgid "Title:"
+msgstr ""
+
+#: widgets/odm-related-content-widget.php:121
+msgid "Select content type:"
+msgstr ""
+
+#: widgets/odm-related-content-widget.php:129
+msgid "Select layout:"
+msgstr ""
+
+#: widgets/odm-related-content-widget.php:140
+msgid "Select max number of posts to list (-1 to show all):"
+msgstr ""
+
+#: widgets/odm-related-content-widget.php:145
+msgid "Define the max height of container:"
+msgstr ""
+
+#: wp-odm_related.php:63
 msgid "Post Types"
 msgstr ""
 
-#: wp-odm_related.php:69
+#: wp-odm_related.php:70
 msgid "Post Types that require related contents "
 msgstr ""
 
-#: wp-odm_related.php:108
+#: wp-odm_related.php:110
 msgid "You do not have sufficient permissions to access this page."
 msgstr ""
 
-#: wp-odm_related.php:116
+#: wp-odm_related.php:118
 msgid "Add related contents"
 msgstr ""
