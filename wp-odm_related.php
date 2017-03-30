@@ -39,10 +39,10 @@ if (!class_exists('Odm_related_content_Plugin')) {
 	        wp_enqueue_style('responsive-related-contents',  plugin_dir_url(__FILE__).'css/responsive.css');
 		    }
 
-		    public function load_text_domain()
-				{
-					load_plugin_textdomain( 'wp-odm_related', false,  dirname( plugin_basename( __FILE__ ) ) . '/i18n' );
-				}
+        public function load_text_domain() {
+          $locale = apply_filters( 'plugin_locale', get_locale(), 'odi' );
+          load_textdomain( 'odi', trailingslashit( WP_LANG_DIR ) . '-' . $locale . '.mo' );
+        }
 
 		    public function check_requirements(){
 		      if (!check_requirements_related_content()):
@@ -60,14 +60,14 @@ if (!class_exists('Odm_related_content_Plugin')) {
           $posttypes_section = 'posttypes_section';
           add_settings_section(
             $posttypes_section,
-            __( 'Post Types', 'wp-odm_related' ),
+            __( 'Post Types', 'odi' ),
             '',
             $section_name
           );
 
           add_settings_field(
            'supported_post_types',
-           __('Post Types that require related contents ', 'wp-odm_related' ),
+           __('Post Types that require related contents ', 'odi' ),
            array($this, 'enable_supported_post_types'),
            $section_name,
            $posttypes_section

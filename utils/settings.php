@@ -12,13 +12,13 @@
 		<table class="form-table">
 			<tr valign="top">
 					<th scope="row">
-            <label for="related_type"><?php _e('Supported related content types','wp-odm_related') ?></label>
+            <label for="related_type"><?php _e('Supported related content types','odi') ?></label>
           </th>
 
 					<td colspan="2">
 						<input class="full-width" type="text" name="related_type" id="related_type" value="<?php echo $related_type ?>"/>
-						<p class="description"><?php _e('Specify a list of comma-separated type names for selecting the TYPE of a related content on metabox and widget.', 'wp-odm_related') ?>
-						<?php _e('The available related content types are:<br/> '.$default_related_type, 'wp-odm_related') ?>
+						<p class="description"><?php _e('Specify a list of comma-separated type names for selecting the TYPE of a related content on metabox and widget.', 'odi') ?>
+						<?php _e('The available related content types are:<br/> '.$default_related_type, 'odi') ?>
 						</p>
 
 					</td>
