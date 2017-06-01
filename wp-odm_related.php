@@ -153,7 +153,7 @@ if (!class_exists('Odm_related_content_Plugin')) {
 
             add_post_meta( $post_ID, 'related_content', $related_content_json, true);
 
-            if($all_related_types):
+            if($all_related_types && $related_content):
               foreach($all_related_types as $type):
                 foreach($related_content as $content):
                   if ($content["type"] == $type):
