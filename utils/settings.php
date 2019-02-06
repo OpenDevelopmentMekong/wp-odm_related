@@ -2,7 +2,7 @@
   <h2>Related Contents Settings</h2>
   <form method="post" action="options.php">
 	  <?php @settings_fields('related-setttings'); ?>
-	  <?php @do_settings_fields('related-setttings'); ?>
+	  <?php @do_settings_fields('related-setttings','Related Settings'); ?>
 	  <?php
 
 		$related_type = !empty($GLOBALS['wp_odm_related_options']->get_option('related_type')) ? $GLOBALS['wp_odm_related_options']->get_option('related_type') : implode(',', get_related_types());
